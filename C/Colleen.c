@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-// test function
+// best comment
 void
 ft_test(void)
 {
@@ -11,7 +11,7 @@ int
 main(void)
 {
 	// comment
-	char *l1="#include <stdio.h>%c%c// test function%cvoid%cft_test(void)%c{%c";
+	char *l1="#include <stdio.h>%c%c// best comment%cvoid%cft_test(void)%c{%c";
 	char *l2="	return;%c}%c%cint%cmain(void)%c{%c	// comment%c";
 	char *l4="	char *l%c=%c%s%c;%c	char *l%c=%c%s%c;%c";
 	char *l5="	char n='%cn', q='%c', b='%c%c';%c";
