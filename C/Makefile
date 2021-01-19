@@ -6,7 +6,7 @@
 #    By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/21 14:49:02 by sbelondr          #+#    #+#              #
-#    Updated: 2020/06/30 04:47:34 by sbelondr         ###   ########.fr        #
+#    Updated: 2021/01/19 08:51:56 by sbelondr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,12 +20,8 @@ DEBUG = no
 # Directory #
 # --------- #
 
-LIBDIR = libft/
-PATHLIBDIR = libft/libs/
 SRCDIR = srcs/
 OBJDIR = objs/
-INCDIR = includes/
-INCLIBDIR = libft/includes/
 
 VPATH = objs:\
 	srcs:
@@ -40,24 +36,18 @@ ifeq ($(DEBUG), yes)
 else
 	CFLAGS = -Wall -Wextra -Werror
 endif
-CPPFLAGS = -I $(INCDIR) -I $(INCLIBDIR)
-LDLIBS = -lft
-LDFLAGS = -L $(PATHLIBDIR)
 
 # --------------- #
 # Different names #
 # --------------- #
 
-NAME = # name
-SRCS_NAMES = #file
-HEADERS_NAMES = # include file
+COLLEEN = Colleen
+GRACE = Grace
+SRCS_NAMES = Colleen.c Grace.c
 
 OBJS_NAMES = $(SRCS_NAMES:.c=.o)
-LIBS_NAMES = libft.a
 
 OBJ = $(addprefix $(OBJDIR), $(OBJS_NAMES))
-HEADERS = $(addprefix $(INCDIR), $(HEADERS_NAMES))
-LIBS = $(addprefix $(PATHLIBDIR), $(LIBS_NAMES))
 
 # ----------------- #
 # Command variables #
@@ -66,7 +56,7 @@ LIBS = $(addprefix $(PATHLIBDIR), $(LIBS_NAMES))
 CREATE = mkdir -p
 DEL = /bin/rm -rf
 PRINT = printf
-PHONY = all clean cleans fclean re libs cleanlibs fcleanlibs lldb norm help
+PHONY = all clean fclean re help
 REMOVE = "\r\033[K"
 FUNC = "%-60b\r"
 
@@ -74,7 +64,7 @@ FUNC = "%-60b\r"
 # Rules #
 # ----- #
 
-all : libs $(NAME)
+all : $(COLLEEN) $(GRACE)
 
 ifeq ($(DEBUG), yes)
 	@$(PRINT) "Debug mode : on\n"
@@ -82,44 +72,29 @@ else
 	@$(PRINT) "Debug mode : off\n"
 endif
 
-$(NAME) : $(LIBS) $(OBJS_NAMES)
-	@$(CC) -o $@ $(OBJ) $(LDFLAGS) $(LDLIBS) $(CFLAGS) $(CPPFLAGS)
+$(COLLEEN) : $(OBJS_NAMES)
+	@$(CC) -o $@ objs/Colleen.o $(CFLAGS) 
 	@$(PRINT) $(REMOVE)"Executable built\n"
 
-libs :
-	@$(MAKE) -j3 -C $(LIBDIR)
+$(GRACE):  $(OBJS_NAMES) 
+	@$(CC) -o $@ objs/Grace.o $(CFLAGS)
+	@$(PRINT) $(REMOVE)"Executable built\n"
 
-%.o : %.c $(HEADERS)
+%.o : %.c
 	@$(CREATE) $(OBJDIR)
-	@$(CC) -o $(OBJDIR)$@ -c $< $(CFLAGS) $(CPPFLAGS)
+	@$(CC) -o $(OBJDIR)$@ -c $< $(CFLAGS)
 
-clean : cleanlibs
+clean : 
 	@$(DEL) $(OBJDIR)
 	@$(PRINT) ".o file deleted\n"
 
-cleans :
-	@$(DEL) $(OBJDIR)
-	@$(PRINT) ".o file deleted\n"
-
-fclean : cleans fcleanlibs
-	@$(DEL) $(NAME)
+fclean : clean
+	@$(DEL) $(GRACE) $(COLLEEN)
 	@$(PRINT) "Executable destroyed\n"
-
-cleanlibs :
-	@$(MAKE) -C $(LIBDIR) clean
-
-fcleanlibs :
-	@$(MAKE) -C $(LIBDIR) fclean
-
-lldb :
-	@lldb ./$(NAME)
-
-norm :
-	@norminette ./$(NAME)
 
 re : fclean all
 
 help :
-	@$(PRINT) "Rules available : all, clean, cleans, fclean, re, libs, cleanlibs, fcleanlibs, lldb, norm and help\n"
+	@$(PRINT) "Rules available : all, clean, fclean, re, and help\n"
 
 .PHONY : $(PHONY)

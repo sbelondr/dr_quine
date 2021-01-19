@@ -8,11 +8,11 @@ int
 ft_grace(void)
 {
 	// best comment
-	int fd=open("toto",O_RDWR | O_CREAT | O_TRUNC, 0666);
+	int fd=open("f",O_RDWR | O_CREAT | O_TRUNC, 0666);
 	char *l1="#include <unistd.h>%c#include <stdio.h>%c#include <fcntl.h>%c";
 	char *l2="%c#define ft_grace main%c%cint%cft_grace(void)%c{%c";
 	char *l3="	// best comment%c";
-	char *l4="	int fd=open(%ctoto%c,O_RDWR | O_CREAT | O_TRUNC, 0666);%c";
+	char *l4="	int fd=open(%cf%c,O_RDWR | O_CREAT | O_TRUNC, 0666);%c";
 	char *l5="%sl1,n,n,n);%s,l2,n,n,n,n,n,n);%s,l3,n);%c%sl4,q,q,n);";
 	char *l6="%slc,'1',q,l1,q,n,'2',q,l2,q,n);%slc,'3',q,l3,q,n,'4',q,l4,q,n);";
 	char *l7="	char n='%cn', q='%c', b='%c%c';%c";
