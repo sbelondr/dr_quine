@@ -6,15 +6,9 @@
 #    By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/21 14:49:02 by sbelondr          #+#    #+#              #
-#    Updated: 2021/01/19 08:51:56 by sbelondr         ###   ########.fr        #
+#    Updated: 2021/01/19 09:17:11 by sbelondr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
-# ---------- #
-# Debug mode #
-# ---------- #
-
-DEBUG = no
 
 # --------- #
 # Directory #
@@ -30,12 +24,11 @@ VPATH = objs:\
 # Compiler and flags #
 # ------------------ #
 
-CC = cc
-ifeq ($(DEBUG), yes)
-	CFLAGS = -Wall -Wextra
-else
-	CFLAGS = -Wall -Wextra -Werror
-endif
+NASM = nasm
+LD = ld
+
+NFLAG = -f macho64
+LFLAG = -no_pie -macosx_version_min 10.8 -lSystem
 
 # --------------- #
 # Different names #
@@ -43,9 +36,10 @@ endif
 
 COLLEEN = Colleen
 GRACE = Grace
-SRCS_NAMES = Colleen.c Grace.c
+SRCS_NAMES = Colleen.s Grace.s
 
-OBJS_NAMES = $(SRCS_NAMES:.c=.o)
+OBJS_NAMES_COLLEEN = $(SRCS_NAMES:Colleen.s=Colleen.o)
+OBJS_NAMES_GRACE = $(SRCS_NAMES:Grace.s=Grace.o)
 
 OBJ = $(addprefix $(OBJDIR), $(OBJS_NAMES))
 
@@ -58,7 +52,6 @@ DEL = /bin/rm -rf
 PRINT = printf
 PHONY = all clean fclean re help
 REMOVE = "\r\033[K"
-FUNC = "%-60b\r"
 
 # ----- #
 # Rules #
@@ -66,30 +59,24 @@ FUNC = "%-60b\r"
 
 all : $(COLLEEN) $(GRACE)
 
-ifeq ($(DEBUG), yes)
-	@$(PRINT) "Debug mode : on\n"
-else
-	@$(PRINT) "Debug mode : off\n"
-endif
+$(COLLEEN) : $(OBJS_NAMES_COLLEEN)
+	@$(LD) objs/Colleen.o $(LFLAG) -o $@
+	@$(PRINT) $(REMOVE)"Executable Colleen built\n"
 
-$(COLLEEN) : $(OBJS_NAMES)
-	@$(CC) -o $@ objs/Colleen.o $(CFLAGS) 
-	@$(PRINT) $(REMOVE)"Executable built\n"
+$(GRACE):  $(OBJS_NAMES_GRACE) 
+	@$(LD) objs/Grace.o $(LFLAG) -o $@
+	@$(PRINT) $(REMOVE)"Executable Grace  built\n"
 
-$(GRACE):  $(OBJS_NAMES) 
-	@$(CC) -o $@ objs/Grace.o $(CFLAGS)
-	@$(PRINT) $(REMOVE)"Executable built\n"
-
-%.o : %.c
+%.o : %.s
 	@$(CREATE) $(OBJDIR)
-	@$(CC) -o $(OBJDIR)$@ -c $< $(CFLAGS)
+	@$(NASM) $(NFLAG) $< -o $(OBJDIR)$@
 
 clean : 
 	@$(DEL) $(OBJDIR)
 	@$(PRINT) ".o file deleted\n"
 
 fclean : clean
-	@$(DEL) $(GRACE) $(COLLEEN)
+	@$(DEL) $(GRACE) $(COLLEEN) f
 	@$(PRINT) "Executable destroyed\n"
 
 re : fclean all

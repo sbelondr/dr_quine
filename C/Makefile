@@ -6,7 +6,7 @@
 #    By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/21 14:49:02 by sbelondr          #+#    #+#              #
-#    Updated: 2021/01/19 08:51:56 by sbelondr         ###   ########.fr        #
+#    Updated: 2021/01/19 09:20:10 by sbelondr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,8 @@ COLLEEN = Colleen
 GRACE = Grace
 SRCS_NAMES = Colleen.c Grace.c
 
-OBJS_NAMES = $(SRCS_NAMES:.c=.o)
+OBJS_NAMES_COLLEEN = $(SRCS_NAMES:Colleen.c=Colleen.o)
+OBJS_NAMES_GRACE = $(SRCS_NAMES:Grace.c=Grace.o)
 
 OBJ = $(addprefix $(OBJDIR), $(OBJS_NAMES))
 
@@ -72,13 +73,13 @@ else
 	@$(PRINT) "Debug mode : off\n"
 endif
 
-$(COLLEEN) : $(OBJS_NAMES)
+$(COLLEEN) : $(OBJS_NAMES_COLLEEN)
 	@$(CC) -o $@ objs/Colleen.o $(CFLAGS) 
-	@$(PRINT) $(REMOVE)"Executable built\n"
+	@$(PRINT) $(REMOVE)"Executable colleen built\n"
 
-$(GRACE):  $(OBJS_NAMES) 
+$(GRACE):  $(OBJS_NAMES_GRACE) 
 	@$(CC) -o $@ objs/Grace.o $(CFLAGS)
-	@$(PRINT) $(REMOVE)"Executable built\n"
+	@$(PRINT) $(REMOVE)"Executable grace built\n"
 
 %.o : %.c
 	@$(CREATE) $(OBJDIR)
@@ -89,7 +90,7 @@ clean :
 	@$(PRINT) ".o file deleted\n"
 
 fclean : clean
-	@$(DEL) $(GRACE) $(COLLEEN)
+	@$(DEL) $(GRACE) $(COLLEEN) f
 	@$(PRINT) "Executable destroyed\n"
 
 re : fclean all
