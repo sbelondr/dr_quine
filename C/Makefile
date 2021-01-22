@@ -6,7 +6,7 @@
 #    By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/21 14:49:02 by sbelondr          #+#    #+#              #
-#    Updated: 2021/01/20 10:05:49 by sbelondr         ###   ########.fr        #
+#    Updated: 2021/01/22 12:12:17 by sbelondr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,10 +43,12 @@ endif
 
 COLLEEN = Colleen
 GRACE = Grace
-SRCS_NAMES = Colleen.c Grace.c
+SULLY = Sully
+SRCS_NAMES = Colleen.c Grace.c Sully.c
 
 OBJS_NAMES_COLLEEN = $(SRCS_NAMES:Colleen.c=Colleen.o)
 OBJS_NAMES_GRACE = $(SRCS_NAMES:Grace.c=Grace.o)
+OBJS_NAMES_SULLY = $(SRCS_NAMES:Sully.c=Sully.o)
 
 OBJ = $(addprefix $(OBJDIR), $(OBJS_NAMES))
 
@@ -65,7 +67,7 @@ FUNC = "%-60b\r"
 # Rules #
 # ----- #
 
-all : $(COLLEEN) $(GRACE)
+all : $(COLLEEN) $(GRACE) $(SULLY)
 
 ifeq ($(DEBUG), yes)
 	@$(PRINT) "Debug mode : on\n"
@@ -81,6 +83,10 @@ $(GRACE):  $(OBJS_NAMES_GRACE)
 	@$(CC) -o $@ objs/Grace.o $(CFLAGS)
 	@$(PRINT) $(REMOVE)"Executable grace built\n"
 
+$(SULLY): $(OBJS_NAMES_SULLY)
+	@$(CC) -o $@ objs/Sully.o $(CFLAGS)
+	@$(PRINT) $(REMOVE)"Executable sully built\n"
+
 %.o : %.c
 	@$(CREATE) $(OBJDIR)
 	@$(CC) -o $(OBJDIR)$@ -c $< $(CFLAGS)
@@ -90,7 +96,7 @@ clean :
 	@$(PRINT) ".o file deleted\n"
 
 fclean : clean
-	@$(DEL) $(GRACE) $(COLLEEN) f
+	@$(DEL) $(GRACE) $(COLLEEN) $(SULLY) f
 	@$(PRINT) "Executable destroyed\n"
 
 re : fclean all
