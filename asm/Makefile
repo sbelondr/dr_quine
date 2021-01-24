@@ -6,7 +6,7 @@
 #    By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/21 14:49:02 by sbelondr          #+#    #+#              #
-#    Updated: 2021/01/22 12:15:12 by sbelondr         ###   ########.fr        #
+#    Updated: 2021/01/22 16:12:35 by samuel           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ NASM = nasm
 LD = ld
 
 NFLAG = -f macho64
-LFLAG = -no_pie -macosx_version_min 10.8 -lSystem
+LFLAG = -no_pie -macosx_version_min 10.8 -lSystem -L/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib
 
 # --------------- #
 # Different names #

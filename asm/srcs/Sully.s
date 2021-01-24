@@ -1,29 +1,36 @@
 section .text
 global _main
 extern _dprintf
-extern _asprintf
 extern _printf
-default rel
+extern _asprintf
+;default rel
 
 _main:
 push rbp
 mov rbp,rsp
 sub rsp,16
 
-mov rdi,i
-dec rdi
-
-lea rdi, [rel r8]
-lea rsi, [rel format]
-mov rdx, i
-call _asprintf
-leave
-;ret
-;mov rdi, rax
+mov rax, i;[rel i]
+dec rax
+;lea rdi, [rel format]
+mov r9, rax
 ;xor rax,rax
-;xor rsi,rsi
+;lodsb
+;mov rsi,rax
+
+lea rdi, [rel f]
+;mov byte[rax+6], 'X'
+add rdi,6
+stosb
+
+lea rdi, [rel f]
+call _printf
+leave
+ret
+
 call exit
 
+file:
 lea rdi,[rel f]
 mov rsi,1538
 mov rdx,0666o
@@ -33,14 +40,13 @@ syscall
 exit:
 xor rdi,rdi
 xor rsi,rsi
-;mov rdi, rax
 xor rax,rax
 mov rax,0x2000001
 mov rdi,5
-ret
 syscall
+ret
 
 section .data
-i:equ 5
-f:db"Sully_", i + '0',".s",0
+i:equ 66
+f:db"Sully_X.s",0
 format:db"%d",0
