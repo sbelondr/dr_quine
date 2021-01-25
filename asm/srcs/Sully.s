@@ -2,31 +2,47 @@ section .text
 global _main
 extern _dprintf
 extern _printf
-extern _asprintf
+extern _sprintf
+extern _setenv
+extern _getenv
 ;default rel
 
 _main:
 push rbp
-mov rbp,rsp
-sub rsp,16
 
-mov rax, i;[rel i]
-dec rax
-;lea rdi, [rel format]
-mov r9, rax
-;xor rax,rax
-;lodsb
-;mov rsi,rax
+editI:
+lea rdi, [rel father]
+call _getenv
+lea r8, [rel rax]
+pop rbp
+push rbp
 
-lea rdi, [rel f]
-;mov byte[rax+6], 'X'
-add rdi,6
-stosb
+mov r9, i
+cmp r8,0
+je display
 
-lea rdi, [rel f]
+dec r9
+
+
+display:
+lea rdi,[rel testt]
+lea rsi, [rel format]
+mov rdx,r9
+mov rax, 0
+call _sprintf
+
+pop rbp
+push rbp
+
+lea rdi, [rel form]
+lea rsi, [rel testt]
+mov rdx, 0
+xor rax,rax
 call _printf
-leave
+pop rbp
+mov rax, 0
 ret
+;ret
 
 call exit
 
@@ -38,15 +54,18 @@ mov rax,0x2000005
 syscall
 
 exit:
-xor rdi,rdi
-xor rsi,rsi
-xor rax,rax
+;xor rdi,rdi
+;xor rsi,rsi
+;xor rax,rax
 mov rax,0x2000001
 mov rdi,5
 syscall
 ret
 
 section .data
-i:equ 66
+father:db"father",0
+i:equ 5
 f:db"Sully_X.s",0
 format:db"%d",0
+form:db"Sully_%s.s",0
+testt:times 512 db 0
