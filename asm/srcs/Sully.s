@@ -5,64 +5,101 @@ extern _printf
 extern _sprintf
 extern _setenv
 extern _getenv
-;default rel
+default rel
+
+section .text
+	global _main
+	global _nameFile
+	global inc_i
 
 _main:
 push rbp
 
-editI:
+;push rax
+
+_nameFile:
+lea rdi,[rel testt]
+lea rsi, [rel father]
+;pop rax
+;lea rdx, [rel father]
+mov rax, 0
+call _sprintf
+push rax
+call openFile
+ret
+
+openFile:
+;pop rax
+lea rdi,[rel father]
+mov rsi,1538
+mov rdx,0666o
+mov rax,0x2000005
+syscall
+mov [fd],rax
+xor rax,rax
+push rax
+call write_in_file
+ret
+
+write_in_file:
+mov rdi,1
+lea rsi,[rel father]
+mov rdx,0
+call _dprintf
+pop rax
+push rax
+call exit
+ret
+
+checkI:
 lea rdi, [rel father]
 call _getenv
 lea r8, [rel rax]
 pop rbp
 push rbp
-
-mov r9, i
+mov rax, i
+push rax
 cmp r8,0
-je display
+;je _display
+call inc_i
+ret
 
-dec r9
-
-
-display:
-lea rdi,[rel testt]
-lea rsi, [rel format]
-mov rdx,r9
-mov rax, 0
-call _sprintf
+inc_i:
+pop rax
+dec rax
+push rax
+;call _display
+ret
 
 pop rbp
 push rbp
 
-lea rdi, [rel form]
-lea rsi, [rel testt]
-mov rdx, 0
-xor rax,rax
-call _printf
-pop rbp
-mov rax, 0
-ret
-;ret
-
 call exit
 
-file:
-lea rdi,[rel f]
-mov rsi,1538
-mov rdx,0666o
-mov rax,0x2000005
-syscall
+;lea rdi, [rel form]
+;lea rsi, [rel testt]
+;mov rdx, 0
+;xor rax,rax
+;call _printf
+;pop rbp
+;mov rax, 0
+;ret
+;ret
+
+
+call exit
 
 exit:
 ;xor rdi,rdi
 ;xor rsi,rsi
 ;xor rax,rax
 mov rax,0x2000001
-mov rdi,5
+mov rdi,0
 syscall
 ret
 
 section .data
+fd:dq 0
 father:db"father",0
 i:equ 5
 f:db"Sully_X.s",0
