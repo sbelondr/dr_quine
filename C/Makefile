@@ -6,7 +6,7 @@
 #    By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/21 14:49:02 by sbelondr          #+#    #+#              #
-#    Updated: 2021/01/22 12:12:17 by sbelondr         ###   ########.fr        #
+#    Updated: 2021/02/23 12:10:19 by sbelondr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 # Debug mode #
 # ---------- #
 
-DEBUG = yes
+DEBUG = no
 
 # --------- #
 # Directory #

@@ -1,10 +1,10 @@
+#define _GNU_SOURCE
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
 #include<sys/types.h>
 #include<unistd.h>
 #include<fcntl.h>
-#include<stdio.h>
 void launch_command(int i,char*l0){char *c;asprintf(&c,l0,i);system(c);free(c);}
 int main(){
 int i=5;
@@ -16,7 +16,7 @@ char *f;asprintf(&f,"Sully_%d.c",i);
 int fd=open(f,O_RDWR | O_CREAT | O_TRUNC, 0666);
 char n='\n',p='%',b='\\',d='"';
 char *l0="gcc Sully_%1$d.c -o Sully_%1$d && ./Sully_%1$d";
-char *l1="#include<stdio.h>%1$c#include<string.h>%1$c#include<stdlib.h>%1$c#include<sys/types.h>%1$c#include<unistd.h>%1$c#include<fcntl.h>%1$c#include<stdio.h>%1$c";
+char *l1="#define _GNU_SOURCE%1$c#include<stdio.h>%1$c#include<string.h>%1$c#include<stdlib.h>%1$c#include<sys/types.h>%1$c#include<unistd.h>%1$c#include<fcntl.h>%1$c";
 char *l2="void launch_command(int i,char*l0){char *c;asprintf(&c,l0,i);system(c);free(c);}%1$cint main(){%1$cint i=%2$d;%1$cif(i<=0)%1$creturn 0;%1$c";
 char *l7="char *env = getenv(%2$cfather%2$c);%1$c(env && strcmp(env, %2$cno%2$c) == 0) ? i-- : setenv(%2$cfather%2$c, %2$cno%2$c, 1);%1$c";
 char *l3="char *f;asprintf(&f,%3$cSully_%2$cd.c%3$c,i);%1$cint fd=open(f,O_RDWR | O_CREAT | O_TRUNC, 0666);";
