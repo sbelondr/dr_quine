@@ -6,7 +6,7 @@
 #    By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/21 14:49:02 by sbelondr          #+#    #+#              #
-#    Updated: 2021/02/24 09:52:11 by sbelondr         ###   ########.fr        #
+#    Updated: 2021/02/24 10:20:28 by sbelondr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,11 +37,11 @@ LFLAG = -no-pie
 COLLEEN = Colleen
 GRACE = Grace
 SULLY = Sully
-SRCS_NAMES = Colleen.asm
+SRCS_NAMES = Colleen.asm Grace.asm Sully.asm
 
 OBJS_NAMES_COLLEEN = $(SRCS_NAMES:Colleen.asm=Colleen.o)
 OBJS_NAMES_GRACE = $(SRCS_NAMES:Grace.asm=Grace.o)
-OBJS_NAMES_SULLY = $(SRCS_NAMES:Sully.s=Sully.o)
+OBJS_NAMES_SULLY = $(SRCS_NAMES:Sully.asm=Sully.o)
 
 OBJ = $(addprefix $(OBJDIR), $(OBJS_NAMES))
 
@@ -82,7 +82,7 @@ clean :
 	@$(PRINT) ".o file deleted\n"
 
 fclean : clean
-	@$(DEL) $(GRACE) $(COLLEEN) f
+	@$(DEL) $(GRACE) $(COLLEEN) $(SULLY) f
 	@$(PRINT) "Executable destroyed\n"
 
 re : fclean all
