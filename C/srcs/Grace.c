@@ -2,15 +2,17 @@
 #include <stdio.h>
 #include <fcntl.h>
 
+#define RDWR O_RDWR
+#define PERM 0666
 #define FT int main(){\
 	/*\
 	   c\
 	*/\
-	int fd=open("Grace_kid.c",O_RDWR | O_CREAT | O_TRUNC, 0666);\
+	int fd=open("Grace_kid.c",RDWR | O_CREAT | O_TRUNC, PERM);\
 	char *l1="#include <unistd.h>%1$c#include <stdio.h>%1$c#include <fcntl.h>%1$c";\
-	char *l2="%1$c#define FT int main(){%2$c%1$c";\
+	char *l2="%1$c#define RDWR O_RDWR%1$c#define PERM 0666%1$c#define FT int main(){%2$c%1$c";\
 	char *l3="	/*%2$c%1$c	   c%2$c%1$c	*/%2$c%1$c";\
-	char *l4="	int fd=open(%1$cGrace_kid.c%1$c,O_RDWR | O_CREAT | O_TRUNC, 0666);%3$c%2$c";\
+	char *l4="	int fd=open(%1$cGrace_kid.c%1$c,RDWR | O_CREAT | O_TRUNC, PERM);%3$c%2$c";\
 	char *l5="%sl1,n,n,n);%s,l2,n,n,n,n,n,n);%s,l3,n);%c%sl4,q,q,n);";\
 	char *l6="%slc,'1',q,l1,q,n,'2',q,l2,q,n);%slc,'3',q,l3,q,n,'4',q,l4,q,n);";\
 	char *l7="	char n='%cn', q='%c', b='%c%c';%c%c";\
