@@ -6,7 +6,7 @@
 #    By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/21 14:49:02 by sbelondr          #+#    #+#              #
-#    Updated: 2021/01/22 16:12:35 by samuel           ###   ########.fr        #
+#    Updated: 2021/03/30 18:18:24 by sbelondr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,7 +82,7 @@ clean :
 	@$(PRINT) ".o file deleted\n"
 
 fclean : clean
-	@$(DEL) $(GRACE) $(COLLEEN) f
+	@$(DEL) $(GRACE) $(COLLEEN) $(SULLY)
 	@$(PRINT) "Executable destroyed\n"
 
 re : fclean all
