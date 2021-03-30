@@ -6,7 +6,7 @@
 #    By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/21 14:49:02 by sbelondr          #+#    #+#              #
-#    Updated: 2021/02/24 10:20:28 by sbelondr         ###   ########.fr        #
+#    Updated: 2021/03/30 21:44:28 by sbelondr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,11 +37,7 @@ LFLAG = -no-pie
 COLLEEN = Colleen
 GRACE = Grace
 SULLY = Sully
-SRCS_NAMES = Colleen.asm Grace.asm Sully.asm
-
-OBJS_NAMES_COLLEEN = $(SRCS_NAMES:Colleen.asm=Colleen.o)
-OBJS_NAMES_GRACE = $(SRCS_NAMES:Grace.asm=Grace.o)
-OBJS_NAMES_SULLY = $(SRCS_NAMES:Sully.asm=Sully.o)
+SRCS_NAMES = Colleen.s Grace.s Sully.s
 
 OBJ = $(addprefix $(OBJDIR), $(OBJS_NAMES))
 
@@ -61,21 +57,23 @@ REMOVE = "\r\033[K"
 
 all : $(COLLEEN) $(GRACE) $(SULLY)
 
-$(COLLEEN) : $(OBJS_NAMES_COLLEEN)
+$(COLLEEN): 
+	@$(CREATE) $(OBJDIR)
+	@$(NASM) $(NFLAG) srcs/Colleen.s -o objs/Colleen.o
 	@$(LD) objs/Colleen.o $(LFLAG) -o $@
 	@$(PRINT) $(REMOVE)"Executable Colleen built\n"
 
-$(GRACE):  $(OBJS_NAMES_GRACE) 
+$(GRACE):
+	@$(CREATE) $(OBJDIR)
+	@$(NASM) $(NFLAG) srcs/Grace.s -o objs/Grace.o
 	@$(LD) objs/Grace.o $(LFLAG) -o $@
 	@$(PRINT) $(REMOVE)"Executable Grace built\n"
 
-$(SULLY):  $(OBJS_NAMES_SULLY) 
+$(SULLY):
+	@$(CREATE) $(OBJDIR)
+	@$(NASM) $(NFLAG) srcs/Sully.s -o objs/Sully.o
 	@$(LD) objs/Sully.o $(LFLAG) -o $@
 	@$(PRINT) $(REMOVE)"Executable Sully built\n"
-
-%.o : %.asm
-	@$(CREATE) $(OBJDIR)
-	@$(NASM) $(NFLAG) $< -o $(OBJDIR)$@
 
 clean : 
 	@$(DEL) $(OBJDIR)
